@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.rail.search.engine.entity.dto.TrainDTO;
+import com.rail.search.engine.exception.SearchException;
 import com.rail.search.engine.service.TrainService;
 
 import jakarta.validation.Valid;
@@ -31,14 +32,14 @@ public class TrainResource {
 	}
 	
 	@PutMapping("/train/{trainId}")
-	public ResponseEntity<String> updateTrainfare(@RequestParam("fare") Double fare,@PathVariable("trainId") Integer trainId){
+	public ResponseEntity<String> updateTrainfare(@RequestParam("fare") Double fare,@PathVariable("trainId") Integer trainId) throws SearchException{
 		String resp=null;
-		try {
+//		try {
 			resp=trainService.updateTrainfare(fare, trainId);	
-		}
-		catch(Exception ex) {
-			return ResponseEntity.badRequest().body(ex.getMessage());
-		}
+//		}
+//		catch(Exception ex) {
+//			return ResponseEntity.badRequest().body(ex.getMessage());
+//		}
 		return new ResponseEntity<>(resp,new HttpHeaders(),HttpStatus.OK);
 	}
 

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.rail.search.engine.entity.dto.RouteDTO;
 import com.rail.search.engine.entity.dto.TrainDTO;
+import com.rail.search.engine.exception.SearchException;
 import com.rail.search.engine.service.RouteService;
 
 import jakarta.validation.Valid;
@@ -37,62 +38,62 @@ public class RouteResource {
 	}
 	
 	@GetMapping("/routes/{routeId}")//@Pattern(regexp="^{0-3}$") 
-	public ResponseEntity<?> getRoute(@PathVariable("routeId")Integer  routeId ){
+	public ResponseEntity<?> getRoute(@PathVariable("routeId")Integer  routeId ) throws Exception{
 		RouteDTO route=null;
-		try {
+//		try {
 			route=routeService.getRoute(routeId);
-		}
-		catch(Exception ex) {
-			return ResponseEntity.badRequest().body(ex.getMessage());
-		}
+//		}
+//		catch(Exception ex) {
+//			return ResponseEntity.badRequest().body(ex.getMessage());
+//		}
 		return ResponseEntity.ok(route);
 	}
 	
 	@GetMapping("/routes/trains")
-	public ResponseEntity<?> getRouteBasedonLoc(@RequestParam("source")String source,@RequestParam ("destination") String destination){
+	public ResponseEntity<?> getRouteBasedonLoc(@RequestParam("source")String source,@RequestParam ("destination") String destination) throws SearchException{
 		List<RouteDTO> resp=null;
-		try {
+//		try {
 			resp=routeService.getRouteBasedonLoc(source, destination);
 			
-		}catch(Exception ex) {
-			return  ResponseEntity.badRequest().body(ex.getMessage());
-		}
+//		}catch(Exception ex) {
+//			return  ResponseEntity.badRequest().body(ex.getMessage());
+//		}
 		return new ResponseEntity<>(resp,new HttpHeaders(),HttpStatus.FOUND);
 	}
 	
 	@PutMapping("/route/{routeid}")
-	public ResponseEntity<?> updateRoute(@PathVariable("routeid") Integer id,@RequestParam("source")String source,@RequestParam ("destination") String destination){
+	public ResponseEntity<?> updateRoute(@PathVariable("routeid") Integer id,@RequestParam("source")String source,@RequestParam ("destination") String destination) throws SearchException{
 		RouteDTO resp=null;
-		try {
+//		try {
 			resp=routeService.updateRoute(id, source, destination);
 			
-		}catch(Exception ex) {
-			return  ResponseEntity.badRequest().body(ex.getMessage());
-		}
+//		}catch(Exception ex) {
+//			return  ResponseEntity.badRequest().body(ex.getMessage());
+//		}
 		return new ResponseEntity<>(resp,new HttpHeaders(),HttpStatus.OK);
 		
 	}
 	@DeleteMapping("/route/{routeId}/{trainId}")
-	public ResponseEntity<String> deleteRouteTrain(@PathVariable("routeId") Integer routeId,@PathVariable("trainId") Integer trainId){
+	public ResponseEntity<String> deleteRouteTrain(@PathVariable("routeId") Integer routeId,@PathVariable("trainId") Integer trainId) throws SearchException{
 		String resp=null;
-		try {
+//		try {
 			resp=routeService.deleteRouteTrain(routeId, trainId);
 			
-		}catch(Exception ex) {
-			return  ResponseEntity.badRequest().body(ex.getMessage());
-		}
+//		}catch(Exception ex) {
+//			return  ResponseEntity.badRequest().body(ex.getMessage());
+//		}
 		return new ResponseEntity<>(resp,new HttpHeaders(),HttpStatus.ACCEPTED);
 		
 	}
 	@PutMapping("/routes/{routeId}")
-	public ResponseEntity<String> updateTrain(@Valid @RequestBody TrainDTO train,@PathVariable("routeId") Integer routeId){
+	public ResponseEntity<String> updateTrain(@Valid @RequestBody TrainDTO train,@PathVariable("routeId") Integer routeId) throws SearchException{
 		String resp=null;
-		try {
+
 			resp=routeService.updateTrain(train, routeId);
 			
-		}catch(Exception ex) {
-			return  ResponseEntity.badRequest().body(ex.getMessage());
-		}
+//		}catch(Exception ex) {
+//			return  ResponseEntity.badRequest().body(ex.getMessage());
+//		}
 		return new ResponseEntity<>(resp,new HttpHeaders(),HttpStatus.ACCEPTED);
 	}
 	
