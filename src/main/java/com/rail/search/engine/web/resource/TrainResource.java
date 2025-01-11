@@ -20,18 +20,18 @@ import com.rail.search.engine.service.TrainService;
 import jakarta.validation.Valid;
 @Validated
 @RestController
-@RequestMapping("/rail")
+@RequestMapping("/rails")
 public class TrainResource {
 	
 	@Autowired
 	private TrainService trainService;
-	@PostMapping("/train")
+	@PostMapping("/admin/train")
 	public ResponseEntity<Integer> createTrain(@Valid @RequestBody TrainDTO train ){
 		Integer resp=trainService.createTrain(train);
 		return new ResponseEntity<Integer>(resp,new HttpHeaders(),HttpStatus.OK);
 	}
 	
-	@PutMapping("/train/{trainId}")
+	@PutMapping("/admin/train/{trainId}")
 	public ResponseEntity<String> updateTrainfare(@RequestParam("fare") Double fare,@PathVariable("trainId") Integer trainId) throws SearchException{
 		String resp=null;
 //		try {

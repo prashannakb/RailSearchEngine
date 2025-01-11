@@ -31,13 +31,13 @@ public class RouteResource {
 	@Autowired
 	private RouteService routeService;
 	
-	@PostMapping("/routes")
+	@PostMapping("/admin/routes")
 	public ResponseEntity<Integer> createRoute(@Valid @RequestBody  RouteDTO route){
 		Integer resp=routeService.createRoute(route);
 		return ResponseEntity.ok(resp);
 	}
 	
-	@GetMapping("/routes/{routeId}")//@Pattern(regexp="^{0-3}$") 
+	@GetMapping("/user/routes/{routeId}")//@Pattern(regexp="^{0-3}$") 
 	public ResponseEntity<?> getRoute(@PathVariable("routeId")Integer  routeId ) throws Exception{
 		RouteDTO route=null;
 //		try {
@@ -49,7 +49,7 @@ public class RouteResource {
 		return ResponseEntity.ok(route);
 	}
 	
-	@GetMapping("/routes/trains")
+	@GetMapping("/user/routes/trains")
 	public ResponseEntity<?> getRouteBasedonLoc(@RequestParam("source")String source,@RequestParam ("destination") String destination) throws SearchException{
 		List<RouteDTO> resp=null;
 //		try {
@@ -61,7 +61,7 @@ public class RouteResource {
 		return new ResponseEntity<>(resp,new HttpHeaders(),HttpStatus.FOUND);
 	}
 	
-	@PutMapping("/route/{routeid}")
+	@PutMapping("/admin/route/{routeid}")
 	public ResponseEntity<?> updateRoute(@PathVariable("routeid") Integer id,@RequestParam("source")String source,@RequestParam ("destination") String destination) throws SearchException{
 		RouteDTO resp=null;
 //		try {
@@ -73,7 +73,7 @@ public class RouteResource {
 		return new ResponseEntity<>(resp,new HttpHeaders(),HttpStatus.OK);
 		
 	}
-	@DeleteMapping("/route/{routeId}/{trainId}")
+	@DeleteMapping("/admin/route/{routeId}/{trainId}")
 	public ResponseEntity<String> deleteRouteTrain(@PathVariable("routeId") Integer routeId,@PathVariable("trainId") Integer trainId) throws SearchException{
 		String resp=null;
 //		try {
@@ -85,7 +85,7 @@ public class RouteResource {
 		return new ResponseEntity<>(resp,new HttpHeaders(),HttpStatus.ACCEPTED);
 		
 	}
-	@PutMapping("/routes/{routeId}")
+	@PutMapping("/admin/routes/{routeId}")
 	public ResponseEntity<String> updateTrain(@Valid @RequestBody TrainDTO train,@PathVariable("routeId") Integer routeId) throws SearchException{
 		String resp=null;
 
